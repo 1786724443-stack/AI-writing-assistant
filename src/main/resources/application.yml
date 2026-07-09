@@ -1,0 +1,71 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: ai-writing-assistant
+
+  datasource:
+    url: jdbc:h2:mem:aiwriter_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+
+ai:
+  provider:
+    type: ${AI_PROVIDER:deepseek}
+    openai:
+      api-key: ${OPENAI_API_KEY:your-api-key-here}
+      base-url: ${OPENAI_BASE_URL:https://api.openai.com/v1}
+      model: ${OPENAI_MODEL:gpt-4o-mini}
+      timeout: ${OPENAI_TIMEOUT:60000}
+    deepseek:
+      api-key: ${DEEPSEEK_API_KEY:your-api-key-here}
+      base-url: ${DEEPSEEK_BASE_URL:https://api.deepseek.com/v1}
+      model: ${DEEPSEEK_MODEL:deepseek-chat}
+      timeout: ${DEEPSEEK_TIMEOUT:60000}
+
+jwt:
+  secret: ${JWT_SECRET:ai-writing-assistant-secret-key-2024}
+  expiration: ${JWT_EXPIRATION:86400000}
+
+app:
+  default-user:
+    enabled: ${APP_DEFAULT_USER_ENABLED:true}
+    username: ${APP_DEFAULT_USERNAME:admin}
+    password: ${APP_DEFAULT_PASSWORD:admin123}
+    email: ${APP_DEFAULT_EMAIL:admin@example.com}
+    daily-quota: ${APP_DEFAULT_QUOTA:100}
+
+springdoc:
+  api-docs:
+    path: /api-docs
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    locale: zh-CN
+    tags-sorter: alpha
+    operations-sorter: alpha
+    doc-expansion: none
+    filter: true
+    default-models-expand-depth: 1
+    default-model-expand-depth: 1
+    display-request-duration: true
+    display-operation-id: false
+    try-it-out-enabled: true
+    show-extensions: false
+    show-common-extensions: false
